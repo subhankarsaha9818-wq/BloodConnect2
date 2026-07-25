@@ -265,31 +265,31 @@ Backend Verification
 
 ## 🔍 Find Blood Donor
 
-![Find Donor](screenshots/find donor.jpeg)
+![Find Donor](screenshots/find-donor.jpeg)
 
 ---
 
 ## 🚨 Blood Request Form
 
-![Request Blood](screenshots/request blood.jpeg)
+![Request Blood](screenshots/request-blood.jpeg)
 
 ---
 
 ## 🩸 Active Blood Requests
 
-![Blood Requests](screenshots/blood requests.jpeg)
+![Blood Requests](screenshots/blood-requests.jpeg)
 
 ---
 
 ## ❤️ Blood Compatibility Cards
 
-![Blood Compatibility](screenshots/blood compatibility card.jpeg)
+![Blood Compatibility](screenshots/blood-compatibility-card.jpeg)
 
 ---
 
 ## 📊 Admin Analytics Dashboard
 
-![Admin Analytics](screenshots/admin analytics.jpeg)
+![Admin Analytics](screenshots/admin-analytics.jpeg)
 
 ---
 
