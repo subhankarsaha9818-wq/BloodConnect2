@@ -318,9 +318,18 @@ git clone https://github.com/yourusername/BloodConnect.git
 ## Install Frontend
 
 ```bash
-cd client
+cd BloodConnect
 npm install
+npm install framer-motion
+npm install react-icons
+npm install vite
+npm install react-icons
+npm install react-hot-toast
+npm install country-state-city
+npm install recharts
+npm install chart.js react-chartjs-2
 npm run dev
+
 ```
 
 ---
@@ -329,7 +338,10 @@ npm run dev
 
 ```bash
 cd server
-npm install
+npm install axios
+npm install openai
+npm install dotenv
+npm install @google/generative-ai
 npm run dev
 ```
 
