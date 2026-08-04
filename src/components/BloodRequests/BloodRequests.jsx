@@ -64,7 +64,10 @@ function BloodRequests() {
           const profileRes = await api.get("/users/profile", {
             headers: { Authorization: `Bearer ${token}` },
           });
-          setUserProfile(profileRes.data);
+
+          // Handle response wrapping (e.g., profileRes.data.user or direct profileRes.data)
+          const userData = profileRes.data?.user || profileRes.data?.data || profileRes.data;
+          setUserProfile(userData);
         } catch (pErr) {
           console.warn("User profile could not be fetched", pErr);
         }
@@ -121,8 +124,12 @@ function BloodRequests() {
   // Check blood compatibility
   const checkCompatibility = (donorBloodGroup, recipientBloodGroup) => {
     if (!donorBloodGroup || !recipientBloodGroup) return false;
-    const allowedRecipients = COMPATIBILITY_MAP[donorBloodGroup] || [];
-    return allowedRecipients.includes(recipientBloodGroup);
+    
+    const formattedDonor = String(donorBloodGroup).trim().toUpperCase();
+    const formattedRecipient = String(recipientBloodGroup).trim().toUpperCase();
+
+    const allowedRecipients = COMPATIBILITY_MAP[formattedDonor] || [];
+    return allowedRecipients.includes(formattedRecipient);
   };
 
   // Respond to a blood request with Compatibility Validation
@@ -133,22 +140,30 @@ function BloodRequests() {
       return;
     }
 
-    const donorBloodGroup = userProfile?.bloodGroup;
-    const recipientBloodGroup = request.bloodGroup;
+    // Fallback checks for common backend field variations
+    const donorBloodGroup =
+      userProfile?.bloodGroup ||
+      userProfile?.blood_group ||
+      userProfile?.bloodType;
 
-    if (donorBloodGroup) {
-      const isCompatible = checkCompatibility(
-        donorBloodGroup,
-        recipientBloodGroup,
+    const recipientBloodGroup = request?.bloodGroup || request?.blood_group;
+
+    if (!donorBloodGroup) {
+      toast.error("Could not verify your blood group. Please update your profile.");
+      return;
+    }
+
+    const isCompatible = checkCompatibility(
+      donorBloodGroup,
+      recipientBloodGroup
+    );
+
+    if (!isCompatible) {
+      toast.error(
+        `You are not compatible! Your blood group is (${donorBloodGroup}), but patient needs (${recipientBloodGroup}).`,
+        { duration: 5000 }
       );
-
-      if (!isCompatible) {
-        toast.error(
-          `You are not compatible! Your blood group is (${donorBloodGroup}), but patient needs (${recipientBloodGroup}).`,
-          { duration: 5000 },
-        );
-        return;
-      }
+      return;
     }
 
     try {
@@ -159,7 +174,7 @@ function BloodRequests() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
 
       toast.success("Response Sent Successfully ❤️");
@@ -180,29 +195,6 @@ function BloodRequests() {
   if (loading) {
     return <Loader text="Loading Requests..." />;
   }
-
-  const handleDonate = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      const res = await api.put(
-        `/requests/${selectedRequest._id}/respond`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      toast.success(res.data.message);
-
-      setSelectedRequest(null);
-      
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Something went wrong");
-    }
-  };
 
   return (
     <section className="blood-requests">
@@ -455,7 +447,9 @@ function BloodRequests() {
                   ✓ Request Completed
                 </span>
               ) : (
-                <button className="donate-btn" onClick={handleDonate}>
+                <button
+                  className="donate-btn"
+                  onClick={() => handleRespond(selectedRequest)}>
                   <FaHeartbeat className="donate-icon" />
                   <span>I Can Donate</span>
                 </button>
