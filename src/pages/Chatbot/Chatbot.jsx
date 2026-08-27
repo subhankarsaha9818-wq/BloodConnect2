@@ -34,7 +34,7 @@ const handleSend = async () => {
 
   try {
     const res = await axios.post(
-      "http://localhost:5000/api/chat",
+      `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/chat`,
       {
         message: userText,
       }

@@ -13,7 +13,7 @@ const ContactMessages = () => {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/contact", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
