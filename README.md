@@ -13,9 +13,17 @@
 
 *A secure, responsive MERN Stack web application that enables users to find blood donors, raise emergency blood requests, manage donations, and help save lives.*
 
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Application-Visit_BloodConnect-red?style=for-the-badge&logo=vercel)](https://blood-connect2.vercel.app/)
+
 ⭐ If you like this project, don't forget to give it a star!
 
 </div>
+
+---
+
+# 🌐 Live Demo
+
+🔗 **Explore the application live here:** [https://blood-connect2.vercel.app/](https://blood-connect2.vercel.app/)
 
 ---
 
