@@ -13,11 +13,14 @@ const ContactMessages = () => {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         // Handles both { success: true, messages: [...] } and array responses
         if (response.data.success) {
@@ -53,6 +56,7 @@ const ContactMessages = () => {
                   <th>#</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Phone</th>
                   <th>Subject</th>
                   <th>Message</th>
                   <th>Date</th>
@@ -66,6 +70,15 @@ const ContactMessages = () => {
                     <td>
                       <a href={`mailto:${msg.email}`}>{msg.email}</a>
                     </td>
+
+                    <td>
+                      {msg.phone ? (
+                        <a href={`tel:${msg.phone}`}>{msg.phone}</a>
+                      ) : (
+                        "N/A"
+                      )}
+                    </td>
+
                     <td>{msg.subject || "N/A"}</td>
                     <td>{msg.message}</td>
                     <td>

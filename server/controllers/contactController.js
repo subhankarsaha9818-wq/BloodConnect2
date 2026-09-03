@@ -3,12 +3,13 @@ const Contact = require("../models/Contact");
 // POST /api/contact - Send message (Public)
 const sendMessage = async (req, res) => {
   try {
-    const { name, phone, email, message } = req.body;
+    const { name, phone, email, subject, message } = req.body;
 
     const contact = new Contact({
       name,
       phone,
       email,
+      subject,
       message,
     });
 
@@ -45,8 +46,7 @@ const getContactMessages = async (req, res) => {
   }
 };
 
-
-module.exports = { 
-  sendMessage, 
-  getContactMessages 
+module.exports = {
+  sendMessage,
+  getContactMessages,
 };

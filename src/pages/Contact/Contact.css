@@ -175,6 +175,14 @@
     grid-template-columns: 1fr;
   }
 }
+.contact-message-field {
+  grid-column: 1 / -1;
+}
+
+.contact-message-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
 
 @media (max-width: 560px) {
   .contact-cards-grid {
